@@ -33,7 +33,7 @@ logging.basicConfig(
 
 
 def send_message(bot, message):
-    """Отправка сообщения в телеграм"""
+    """Отправка сообщения в телеграм."""
     try:
         bot.send_message(
             chat_id=TELEGRAM_CHAT_ID,
@@ -45,7 +45,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Получение ответа от API"""
+    """Получение ответа от API."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -60,7 +60,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Проверка ответа"""
+    """Проверка ответа."""
     if type(response) is not dict:
         logging.error('Тип ответа API - не словарь')
     if 'homeworks' not in response:
@@ -75,7 +75,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Получение статуса домашней работы"""
+    """Получение статуса домашней работы."""
     if ('homework_name' or 'status') not in homework:
         logging.error('Некорректный формат данных homework')
     homework_name = homework['homework_name']
@@ -90,7 +90,7 @@ def parse_status(homework):
 
 
 def check_tokens():
-    """Проверка указаны ли все токены"""
+    """Проверка указаны ли все токены."""
     if None in [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]:
         return False
     return True
