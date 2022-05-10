@@ -104,7 +104,7 @@ def main():
         raise SystemExit('Проверьте, заданы ли все токены')
 
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
-    current_timestamp = int(time.time())
+    current_timestamp = int(time.time()) - 30*24*3600
 
     while True:
         try:
