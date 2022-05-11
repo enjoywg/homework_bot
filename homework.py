@@ -5,10 +5,10 @@ import time
 
 import requests
 import telegram
-from telegram import TelegramError
 from dotenv import load_dotenv
 
-from exceptions import APIAnswerError, SendMessageError, APICode200Error, ResponseFormatError
+from exceptions import (APIAnswerError, APICode200Error, SendMessageError,
+                        ResponseFormatError)
 
 load_dotenv()
 
@@ -42,7 +42,7 @@ def send_message(bot, message):
             text=message,
         )
         logging.info('Сообщение отправлено')
-    except TelegramError:
+    except telegram.TelegramError:
         logging.error('Сбой при отправке сообщения в Telegram', exc_info=True)
         raise SendMessageError('Сбой при отправке сообщения в Telegram')
 
@@ -124,7 +124,7 @@ def main():
         sys.exit('Проверьте, заданы ли все токены')
 
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
-    current_timestamp = int(time.time()) - 30*24*3600
+    current_timestamp = int(time.time())
     prev_message = ''
 
     while True:
