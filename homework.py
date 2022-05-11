@@ -7,8 +7,7 @@ import requests
 import telegram
 from dotenv import load_dotenv
 
-from exceptions import (APIAnswerError, APICode200Error, SendMessageError,
-                        ResponseFormatError)
+from exceptions import (APIAnswerError, APICode200Error, SendMessageError)
 
 load_dotenv()
 
@@ -72,10 +71,10 @@ def check_response(response):
     """Проверка ответа."""
     if not isinstance(response, dict):
         logging.error(f'Тип ответа API - не словарь: {response}')
-        raise ResponseFormatError(f'Тип ответа API - не словарь: {response}')
+        raise TypeError(f'Тип ответа API - не словарь: {response}')
     if 'homeworks' not in response:
         logging.error(f'Отсутствует ключ homeworks в ответе API: {response}')
-        raise ResponseFormatError(
+        raise TypeError(
             f'Отсутствует ключ homeworks в ответе API: {response}'
         )
     homeworks = response['homeworks']

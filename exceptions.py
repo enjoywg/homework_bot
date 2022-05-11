@@ -8,7 +8,3 @@ class APIAnswerError(Exception):
 
 class APICode200Error(Exception):
     pass
-
-
-class ResponseFormatError(Exception):
-    pass
