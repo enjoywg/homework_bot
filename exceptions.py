@@ -2,5 +2,13 @@ class SendMessageError(Exception):
     pass
 
 
-class NoAnswerError(Exception):
+class APIAnswerError(Exception):
+    pass
+
+
+class APICode200Error(Exception):
+    pass
+
+
+class ResponseFormatError(Exception):
     pass
