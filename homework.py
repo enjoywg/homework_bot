@@ -62,8 +62,8 @@ def get_api_answer(current_timestamp):
                       f'Эндпоинт: {ENDPOINT}, Параметры: {params},'
                       f'Ответ: {response.status_code}')
         raise APIAnswerError('Ответ от эндпоинта отличный от 200'
-                              f'Эндпоинт: {ENDPOINT}, Параметры: {params},'
-                              f'Ответ: {response.status_code}')
+                             f'Эндпоинт: {ENDPOINT}, Параметры: {params},'
+                             f'Ответ: {response.status_code}')
     return response.json()
 
 
