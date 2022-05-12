@@ -7,7 +7,7 @@ import requests
 import telegram
 from dotenv import load_dotenv
 
-from exceptions import (APIAnswerError, APICode200Error, SendMessageError)
+from exceptions import APIAnswerError, SendMessageError
 
 load_dotenv()
 
@@ -61,7 +61,7 @@ def get_api_answer(current_timestamp):
         logging.error('Ответ от эндпоинта отличный от 200'
                       f'Эндпоинт: {ENDPOINT}, Параметры: {params},'
                       f'Ответ: {response.status_code}')
-        raise APICode200Error('Ответ от эндпоинта отличный от 200'
+        raise APIAnswerError('Ответ от эндпоинта отличный от 200'
                               f'Эндпоинт: {ENDPOINT}, Параметры: {params},'
                               f'Ответ: {response.status_code}')
     return response.json()
@@ -106,10 +106,9 @@ def check_tokens():
     env_vars = {'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
                 'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
                 'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID}
-    none_env_vars = []
-    for env_var_name, env_var in env_vars.items():
-        if env_var is None:
-            none_env_vars.append(env_var_name)
+    none_env_vars = [env_var_name
+                     for env_var_name, env_var in env_vars.items()
+                     if env_var is None]
     if none_env_vars:
         logging.critical(f'Отсутствие обязательных переменных окружения во '
                          f'время запуска бота: {", ".join(none_env_vars)}')
@@ -137,11 +136,13 @@ def main():
                     prev_message = message
                     send_message(bot, message)
 
+        except SendMessageError:
+            logging.error('Сбой при отправке сообщения в Telegram')
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             if message != prev_message:
                 prev_message = message
-                logging.critical(message)
+                logging.error(message)
                 send_message(bot, message)
 
         finally:
